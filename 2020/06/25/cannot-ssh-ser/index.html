@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="theme-color" content=#58b77a>
-  <title>Ubuntu Posts | Thanh&#39;s Blogs</title>
+  <title>Cannot SSH into Server | Thanh&#39;s Blogs</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="Thanh Ba Ngoc">
   <meta name="keywords" content="">
@@ -62,7 +62,7 @@
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
 <meta name="generator" content="Hexo 4.2.1"></head>
 <body>
-<div  class="single">
+<div class="single">
 <a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
 <div class="popup search-popup local-search-popup">
   <div class="local-search-header clearfix">
@@ -86,8 +86,8 @@
   <div class="overlay">
   <div class="page-title">
     <div class="avatar"><a href="/"><img src="/images/avatar.jpeg"></a></div>
-    <span>2020-06-26</span>
-    <h2>Ubuntu Posts</h2>
+    <span>2020-06-25</span>
+    <h2>Cannot SSH into Server</h2>
     
     <div class="social-links">
     <a href="https://github.com/thanhbangoc" target="_blank"><i class="fa fa-github fa-fw"></i></a>
@@ -99,14 +99,59 @@
 </div>
 
 <div id="lx-main-content">
-  <div class="lx-post"> 
+  <div class="lx-post">
     <div class="lx-entry padding">
       <div>
-        <h2 id="Install-Ubuntu-Server-16-04-LTS"><a href="#Install-Ubuntu-Server-16-04-LTS" class="headerlink" title="Install Ubuntu Server 16.04 LTS"></a><a href="http://localhost:4000/2020/06/26/kubernetes-overview/" target="_blank" rel="noopener">Install Ubuntu Server 16.04 LTS</a></h2>
+        <p>Welcome to <a href="https://thanhbangoc.github.io/" target="_blank" rel="noopener">Thanh’s Blogs</a>! This is my post for Cannot SSH into Server . Check document bellow for more info. If you get any problems when using document, you can find the answer in <a href="https://www.linkedin.com/in/thanhbangoc/" target="_blank" rel="noopener">Linkedin</a> or you can ask me on <a href="mailto:thanhbangoc@gmail.com">Email</a>.</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Secure Shell (SSH) is a cryptographic network protocol used for a secure connection between a client and a server.</p>
+<p>In this tutorial, we’ll show you how to enable SSH on an Ubuntu Desktop machine. Enabling SSH will allow you to remotely connect to your Ubuntu machine and securely transfer files or perform administrative tasks.</p>
+<h2 id="Enabling-SSH-on-Ubuntu"><a href="#Enabling-SSH-on-Ubuntu" class="headerlink" title="Enabling SSH on Ubuntu"></a>Enabling SSH on Ubuntu</h2><h3 id="install-the-openssh-server-package"><a href="#install-the-openssh-server-package" class="headerlink" title="install the openssh-server package"></a>install the openssh-server package</h3><p>Open your terminal either by using the Ctrl+Alt+T keyboard shortcut or by clicking on the terminal icon and install the openssh-server package by typing.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure>
+<p>Enter the password when prompted and enter <strong>Y</strong> to continue with the installation</p>
+<p>To verify that the installation was successful and SSH service is running</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status ssh</span><br></pre></td></tr></table></figure>
+
+<h3 id="Config-firewall-and-and-open-port-22"><a href="#Config-firewall-and-and-open-port-22" class="headerlink" title="Config firewall and and open port 22"></a>Config firewall and and open port 22</h3><p>If the firewall is enabled on your system, make sure to open the SSH port:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo ufw allow ssh</span><br><span class="line">sudo ufw <span class="built_in">enable</span></span><br><span class="line">sudo ufw status</span><br></pre></td></tr></table></figure>
+<p>Now that SSH is installed and running on your Ubuntu system you can connect to it via SSH from any remote machine.</p>
+<h3 id="Connecting-to-SSH-Over-LAN"><a href="#Connecting-to-SSH-Over-LAN" class="headerlink" title="Connecting to SSH Over LAN"></a>Connecting to SSH Over LAN</h3><p>To connect to your Ubuntu machine over LAN you only need to enter the following command</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh username@ip_address</span><br></pre></td></tr></table></figure>
+<p>If you don’t know your IP address you can easily find it using the ip command</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip a</span><br></pre></td></tr></table></figure>
+
       </div>
-    </div>		
+    </div>
   </div>
 </div>
+<div class="lx-navigation">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2020/06/26/kubernetes-overview/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>Introdu...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2020/06/25/in-ubun-ser-16.04/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>Install...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
 </div>
 
 <footer>
@@ -150,7 +195,7 @@
       <i class="fa fa-th-list fa-fw"></i>Categories</span>
         <ul>
           <li><a href="/kubernetes/">Kubernetes</a></li>
-        <li><a href="/ubuntu/">Ubuntu</a></li>
+        <li><a href="/ubuntu-linux/">Ubuntu/ Linux OS</a></li>
         </ul>
     </li>
     

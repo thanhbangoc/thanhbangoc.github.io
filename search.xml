@@ -54,12 +54,12 @@
   </entry>
   <entry>
     <title>Install Ubuntu Server 16.04 LTS</title>
-    <url>/2020/06/26/in-ubun-ser-16.04/</url>
+    <url>/2020/06/25/in-ubun-ser-16.04/</url>
     <content><![CDATA[<p>Welcome to <a href="https://thanhbangoc.github.io/" target="_blank" rel="noopener">Thanh’s Blogs</a>! This is my post for Install Ubuntu Server 16.04 LTS . Check document bellow for more info. If you get any problems when using document, you can find the answer in <a href="https://www.linkedin.com/in/thanhbangoc/" target="_blank" rel="noopener">Linkedin</a> or you can ask me on <a href="mailto:thanhbangoc@gmail.com">Email</a>.</p>
 <h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Ubuntu Server is Ubuntu tailored for networks and services, and it’s just as capable sharing files on your home network as it is running within a Hadoop cluster.</p>
 <p>Unlike the installation of Ubuntu Desktop, Ubuntu Server does not include a graphical installation program. Instead, it uses a console menu-based process. If you’d rather install the desktop version, take a look at our Install Ubuntu desktop tutorial.</p>
 <p>This guide will provide an overview of the installation from either a DVD or a USB flash drive, suitable for anyone with an interest in running their own server. For a more detailed guide on Ubuntu Server’s capabilities and its configuration, take a look at our Ubuntu Server help documentation.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h3><p>You can visit the following link to download the ISO file to install Ubuntu Server: <a href="https://www.ubuntu.com/download/server" target="_blank" rel="noopener">LTS</a> or <a href="https://releases.ubuntu.com/16.04/" target="_blank" rel="noopener">16.04</a> and choose download image you want !<br><img src="post-images/install-ubuntu-server-16.04/Screenshot_1.png" alt=""><br>Once the image download completes, burn it to a CD or create a bootable USB disk using Unbootin (for BIOS machines) or Rufus (for UEFI machines).</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Prepare"><a href="#Prepare" class="headerlink" title="Prepare"></a>Prepare</h3><p>You can visit the following link to download the ISO file to install Ubuntu Server: <a href="https://www.ubuntu.com/download/server" target="_blank" rel="noopener">LTS</a> or <a href="https://releases.ubuntu.com/16.04/" target="_blank" rel="noopener">16.04</a> and choose download image you want !<br><img src="/post-images/install-ubuntu-server-16.04/Screenshot_1.png" alt="alt"><br>Once the image download completes, burn it to a CD or create a bootable USB disk using Unbootin (for BIOS machines) or Rufus (for UEFI machines).</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
@@ -158,6 +158,27 @@
 <p>Sau đó vào lần lượt các máy node worker1 và worker2 (bằng SSH ssh <a href="mailto:root@172.16.10.101">root@172.16.10.101</a> và ssh <a href="mailto:root@172.16.10.102">root@172.16.10.102</a>). Copy kết quả trả về từ lệnh trước và chạy trên terminal để kết nối.\</p>
 <p>Sau đó kiểm tra các node đã được kết nối trong cluster bằng lệnh sau</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">kubectl get nodes</span><br></pre></td></tr></table></figure>
+]]></content>
+  </entry>
+  <entry>
+    <title>Cannot SSH into Server</title>
+    <url>/2020/06/25/cannot-ssh-ser/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://thanhbangoc.github.io/" target="_blank" rel="noopener">Thanh’s Blogs</a>! This is my post for Cannot SSH into Server . Check document bellow for more info. If you get any problems when using document, you can find the answer in <a href="https://www.linkedin.com/in/thanhbangoc/" target="_blank" rel="noopener">Linkedin</a> or you can ask me on <a href="mailto:thanhbangoc@gmail.com">Email</a>.</p>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>Secure Shell (SSH) is a cryptographic network protocol used for a secure connection between a client and a server.</p>
+<p>In this tutorial, we’ll show you how to enable SSH on an Ubuntu Desktop machine. Enabling SSH will allow you to remotely connect to your Ubuntu machine and securely transfer files or perform administrative tasks.</p>
+<h2 id="Enabling-SSH-on-Ubuntu"><a href="#Enabling-SSH-on-Ubuntu" class="headerlink" title="Enabling SSH on Ubuntu"></a>Enabling SSH on Ubuntu</h2><h3 id="install-the-openssh-server-package"><a href="#install-the-openssh-server-package" class="headerlink" title="install the openssh-server package"></a>install the openssh-server package</h3><p>Open your terminal either by using the Ctrl+Alt+T keyboard shortcut or by clicking on the terminal icon and install the openssh-server package by typing.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install openssh-server</span><br></pre></td></tr></table></figure>
+<p>Enter the password when prompted and enter <strong>Y</strong> to continue with the installation</p>
+<p>To verify that the installation was successful and SSH service is running</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl status ssh</span><br></pre></td></tr></table></figure>
+
+<h3 id="Config-firewall-and-and-open-port-22"><a href="#Config-firewall-and-and-open-port-22" class="headerlink" title="Config firewall and and open port 22"></a>Config firewall and and open port 22</h3><p>If the firewall is enabled on your system, make sure to open the SSH port:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo ufw allow ssh</span><br><span class="line">sudo ufw <span class="built_in">enable</span></span><br><span class="line">sudo ufw status</span><br></pre></td></tr></table></figure>
+<p>Now that SSH is installed and running on your Ubuntu system you can connect to it via SSH from any remote machine.</p>
+<h3 id="Connecting-to-SSH-Over-LAN"><a href="#Connecting-to-SSH-Over-LAN" class="headerlink" title="Connecting to SSH Over LAN"></a>Connecting to SSH Over LAN</h3><p>To connect to your Ubuntu machine over LAN you only need to enter the following command</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh username@ip_address</span><br></pre></td></tr></table></figure>
+<p>If you don’t know your IP address you can easily find it using the ip command</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ip a</span><br></pre></td></tr></table></figure>
 ]]></content>
   </entry>
 </search>

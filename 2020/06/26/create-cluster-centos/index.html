@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>Create cluster Kubernetes with Vagrant Centos/7 - Vietnamese | Thanh&#39;s Blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Thanh Ba Ngoc">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.3.9',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/css/main.min.css">
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.jside.menu.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "greenish",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+<div class="single">
+<a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div id="lx-aside" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+  <div class="overlay">
+  <div class="page-title">
+    <div class="avatar"><a href="/"><img src="/images/avatar.jpeg"></a></div>
+    <span>2020-06-26</span>
+    <h2>Create cluster Kubernetes with Vagrant Centos/7 - Vietnamese</h2>
+    
+    <div class="social-links">
+    <a href="https://github.com/thanhbangoc" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:thanhbangoc@gmail.com" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://www.linkedin.com/in/thanhbangoc/" target="_blank"><i class="fa fa-linkedin fa-fw"></i></a>
+    <a href="https://www.facebook.com/kubo.hunter/" target="_blank"><i class="fa fa-facebook fa-fw"></i></a>
+</div></div>
+</div>
+</div>
+
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <p>Welcome to <a href="https://thanhbangoc.github.io/" target="_blank" rel="noopener">Thanh’s Blogs</a>! This is my post for Create cluster Kubernetes with Vagrant Centos/7 . Check document bellow for more info. If you get any problems when using document, you can find the answer in <a href="https://www.linkedin.com/in/thanhbangoc/" target="_blank" rel="noopener">Linkedin</a> or you can ask me on <a href="mailto:thanhbangoc@gmail.com">Email</a>.</p>
+<h2 id="Tong-quan"><a href="#Tong-quan" class="headerlink" title="Tổng quan"></a>Tổng quan</h2><p>Cluster có nghĩa là cụm, vậy Kubernetes Cluster có nghĩa là cụm các máy chạy docker có phải vậy không? không đơn giản thế đâu, nhưng trước tiên cứ hãy xem như vậy đã.<br>Một cluster là một tập các máy vật lý hay máy ảo được sử dụng bởi Kubernetes để chạy các ứng dụng.<br>Kubernetes Cluster bao gồm Nodes(master) và Nodes(worker).<br><img src="/post-images/cre-clu-centos7/Screenshot_1.png" alt="alt"></p>
+<h2 id="Vagrant"><a href="#Vagrant" class="headerlink" title="Vagrant"></a>Vagrant</h2><p>Vagrant làm việc với một nền tảng ảo hóa nào đó như VirtualBox, HyperV, VM … nên bạn cũng cần có trên hệ thống của mình, ví dụ cần cài đặt VirtualBox nếu dùng nền tảng này, ở phần này coi như bạn đã đang có VirtualBox hay HyperV trên hệ thống.</p>
+<h3 id="Cai-dat-vagrant"><a href="#Cai-dat-vagrant" class="headerlink" title="Cài đặt vagrant"></a>Cài đặt vagrant</h3><h4 id="tren-Windows-macOS"><a href="#tren-Windows-macOS" class="headerlink" title="trên Windows / macOS"></a>trên Windows / macOS</h4><p>Tải Vagrant đúng bản dành cho Windows (32 hay 64bit) hay macOS tại <a href="https://www.vagrantup.com/downloads.html" target="_blank" rel="noopener">Tải Vagrant</a>, sau đó chạy bộ cài đặt, có thể cần khởi động lại máy.<br>Trên Windows có thể dùng PowerShell hoặc nếu muốn cài GitBash để có môi trường dòng lệnh tương tác với Vagrant. Sau đó chạy lệnh để kiểm tra vagarant đang có trên hệ thống:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant version</span><br></pre></td></tr></table></figure>
+
+<h4 id="tren-Ubuntu"><a href="#tren-Ubuntu" class="headerlink" title="trên Ubuntu"></a>trên Ubuntu</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install vagrant</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant version</span><br></pre></td></tr></table></figure>
+
+<h2 id="Tao-Cluster-Kubernetes-hoan-chinh"><a href="#Tao-Cluster-Kubernetes-hoan-chinh" class="headerlink" title="Tạo Cluster Kubernetes hoàn chỉnh"></a>Tạo Cluster Kubernetes hoàn chỉnh</h2><p>Phần này sẽ tạo ra một Cluster Kubernetes hoàn chỉnh từ 3 máy (3 VPS - hay 3 Server) chạy CentOS, bạn có thể dùng cách này khi triển khai môi trường product. Hệ thống này gồm:</p>
+<table>
+<thead>
+<tr>
+<th>Tên máy</th>
+<th align="center">Thông tin</th>
+<th align="right">Vai trò</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>k8s-master.xtl</td>
+<td align="center">HĐH CentOS7, Docker CE, Kubernetes. Địa chỉ IP 192.168.10.100</td>
+<td align="right">Khởi tạo là master</td>
+</tr>
+<tr>
+<td>k8s-worker1.xtl</td>
+<td align="center">HĐH CentOS7, Docker CE, Kubernetes. Địa chỉ IP 192.168.10.101</td>
+<td align="right">Khởi tạo là worker</td>
+</tr>
+<tr>
+<td>k8s-worker1.xtl</td>
+<td align="center">HĐH CentOS7, Docker CE, Kubernetes. Địa chỉ IP 192.168.10.102</td>
+<td align="right">Khởi tạo là worker</td>
+</tr>
+</tbody></table>
+<h3 id="Tao-node-Master-Kubernetes"><a href="#Tao-node-Master-Kubernetes" class="headerlink" title="Tạo node Master Kubernetes"></a>Tạo node Master Kubernetes</h3><p><strong>STEP1</strong>: Tạo file config chứa thông tin node master: kubernetes-centos7/master/Vagrantfile</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- mode: ruby -*-</span></span><br><span class="line"><span class="comment"># vi: set ft=ruby :</span></span><br><span class="line"></span><br><span class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> |config|</span><br><span class="line">config.vm.box = <span class="string">"centos/7"</span></span><br><span class="line">config.vm.network <span class="string">"private_network"</span>, ip: <span class="string">"192.168.10.100"</span></span><br><span class="line">config.vm.hostname = <span class="string">"k8s-master.xtl"</span></span><br><span class="line"></span><br><span class="line">config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> |vb|</span><br><span class="line">    vb.name = <span class="string">"k8s-master.xtl"</span></span><br><span class="line">    vb.cpus = 2</span><br><span class="line">    vb.memory = <span class="string">"2048"</span></span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">config.vm.provision <span class="string">"shell"</span>, path: <span class="string">"./../install-docker-kube.sh"</span></span><br><span class="line"></span><br><span class="line">config.vm.provision <span class="string">"shell"</span>, inline: &lt;&lt;-SHELL</span><br><span class="line"></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"root password"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"123"</span> | passwd --stdin root</span><br><span class="line">    sed -i <span class="string">'s/^PasswordAuthentication no/PasswordAuthentication yes/'</span> /etc/ssh/sshd_config</span><br><span class="line">    systemctl reload sshd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat &gt;&gt;/etc/hosts&lt;&lt;EOF</span><br><span class="line">192.168.10.100 k8s-master.xtl</span><br><span class="line">192.168.10.101 k8s-worker1.xtl</span><br><span class="line">192.168.10.102 k8s-worker2.xtl</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">SHELL</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>Tương tự tạo cho các node worker1: kubernetes-centos7/woker1/Vagrantfile. Worker2 làm tương tự:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- mode: ruby -*-</span></span><br><span class="line"><span class="comment"># vi: set ft=ruby :</span></span><br><span class="line"></span><br><span class="line">Vagrant.configure(<span class="string">"2"</span>) <span class="keyword">do</span> |config|</span><br><span class="line">config.vm.box = <span class="string">"centos/7"</span></span><br><span class="line">config.vm.network <span class="string">"private_network"</span>, ip: <span class="string">"192.168.10.101"</span></span><br><span class="line">config.vm.hostname = <span class="string">"k8s-worker1.xtl"</span></span><br><span class="line"></span><br><span class="line">config.vm.provider <span class="string">"virtualbox"</span> <span class="keyword">do</span> |vb|</span><br><span class="line">    vb.name = <span class="string">"k8s-worker1.xtl"</span></span><br><span class="line">    vb.cpus = 1</span><br><span class="line">    vb.memory = <span class="string">"1024"</span></span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">config.vm.provision <span class="string">"shell"</span>, path: <span class="string">"./../install-docker-kube.sh"</span></span><br><span class="line"></span><br><span class="line">config.vm.provision <span class="string">"shell"</span>, inline: &lt;&lt;-SHELL</span><br><span class="line"></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"root password"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"123"</span> | passwd --stdin root</span><br><span class="line">    sed -i <span class="string">'s/^PasswordAuthentication no/PasswordAuthentication yes/'</span> /etc/ssh/sshd_config</span><br><span class="line">    systemctl reload sshd</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">cat &gt;&gt;/etc/hosts&lt;&lt;EOF</span><br><span class="line">192.168.10.100 k8s-master.xtl</span><br><span class="line">192.168.10.101 k8s-worker1.xtl</span><br><span class="line">192.168.10.102 k8s-worker2.xtl</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">SHELL</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p><strong>STEP2</strong>: Tạo file script install môi trường docker và kube cho những node này: kubernetes-centos7/install-docker-kube.sh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Cập nhật 12/2019</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Cai dat Docker</span></span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">yum update -y &amp;&amp; yum install docker-ce-18.06.2.ce -y</span><br><span class="line">usermod -aG docker $(whoami)</span><br><span class="line"></span><br><span class="line"><span class="comment">## Create /etc/docker directory.</span></span><br><span class="line">mkdir /etc/docker</span><br><span class="line"></span><br><span class="line"><span class="comment"># Setup daemon.</span></span><br><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">  <span class="string">"exec-opts"</span>: [<span class="string">"native.cgroupdriver=systemd"</span>],</span><br><span class="line">  <span class="string">"log-driver"</span>: <span class="string">"json-file"</span>,</span><br><span class="line">  <span class="string">"log-opts"</span>: &#123;</span><br><span class="line">    <span class="string">"max-size"</span>: <span class="string">"100m"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">"storage-driver"</span>: <span class="string">"overlay2"</span>,</span><br><span class="line">  <span class="string">"storage-opts"</span>: [</span><br><span class="line">    <span class="string">"overlay2.override_kernel_check=true"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">mkdir -p /etc/systemd/system/docker.service.d</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Restart Docker</span></span><br><span class="line">systemctl <span class="built_in">enable</span> docker.service</span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Tat SELinux</span></span><br><span class="line">setenforce 0</span><br><span class="line">sed -i --follow-symlinks <span class="string">'s/^SELINUX=enforcing/SELINUX=disabled/'</span> /etc/sysconfig/selinux</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tat Firewall</span></span><br><span class="line">systemctl <span class="built_in">disable</span> firewalld &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">systemctl stop firewalld</span><br><span class="line"></span><br><span class="line"><span class="comment"># sysctl</span></span><br><span class="line">cat &gt;&gt;/etc/sysctl.d/kubernetes.conf&lt;&lt;EOF</span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br><span class="line">EOF</span><br><span class="line">sysctl --system &gt;/dev/null 2&gt;&amp;1</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tat swap</span></span><br><span class="line">sed -i <span class="string">'/swap/d'</span> /etc/fstab</span><br><span class="line">swapoff -a</span><br><span class="line"></span><br><span class="line"><span class="comment"># Add yum repo file for Kubernetes</span></span><br><span class="line">cat &gt;&gt;/etc/yum.repos.d/kubernetes.repo&lt;&lt;EOF</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">yum install -y -q kubeadm kubelet kubectl</span><br><span class="line"></span><br><span class="line">systemctl <span class="built_in">enable</span> kubelet</span><br><span class="line">systemctl start kubelet</span><br><span class="line"></span><br><span class="line"><span class="comment"># Configure NetworkManager before attempting to use Calico networking.</span></span><br><span class="line">cat &gt;&gt;/etc/NetworkManager/conf.d/calico.conf&lt;&lt;EOF</span><br><span class="line">[keyfile]</span><br><span class="line">unmanaged-devices=interface-name:cali*;interface-name:tunl*</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>Thiết lập phân quyền cho file script</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmode +x install-docker-kube.sh</span><br></pre></td></tr></table></figure>
+
+<p><strong>STEP3</strong>: Khởi tạo các node.<br>Tại thư mục kubernetes-centos7/master/ gõ lệnh vagrant để tạo máy k8s-master.xtl.<br>Tại thư mục kubernetes-centos7/worker1/ gõ lệnh vagrant để tạo máy k8s-master.xtl.<br>Tại thư mục kubernetes-centos7/woker2/ gõ lệnh vagrant để tạo máy k8s-master.xtl.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vagrant up</span><br></pre></td></tr></table></figure>
+
+<p><em>Sau lệnh này, quá trình cài đặt diễn ra, kết thúc thì có máy ảo VirtualBox với tên k8s-master.xtl, k8s-worker1 và k8s-worker2 trong đó đã có Docker, kubelet đang chạy lần lượt ở các địa chỉ IP 192.168.10.100, 192.168.10.101 và 192.168.10.102. Hãy ssh vào máy này bằng lệnh ssh với tài khoản root có cấu hình pass là 123 ở trên.</em></p>
+<h3 id="Tao-cluster-o-node-master"><a href="#Tao-cluster-o-node-master" class="headerlink" title="Tạo cluster ở node master"></a>Tạo cluster ở node master</h3><p>Trong lệnh khởi tạo cluster có tham số –pod-network-cidr để chọn cấu hình mạng của POD, do dự định dùng Addon flanet nên chọn –pod-network-cidr=10.244.0.0/16.<br>ssh vào máy k8s-master.xtl</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh root@192.168.10.100</span><br></pre></td></tr></table></figure>
+<p>Khởi tạo cluster</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --apiserver-advertise-address=172.16.10.100 --pod-network-cidr=10.244.0.0/16</span><br></pre></td></tr></table></figure>
+<p>Sau khi lệnh chạy xong, chạy tiếp cụm lệnh nó yêu cầu chạy sau khi khởi tạo- để chép file cấu hình đảm bảo trình kubectl trên máy này kết nối Cluster</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p <span class="variable">$HOME</span>/.kube</span><br><span class="line">sudo cp -i /etc/kubernetes/admin.conf <span class="variable">$HOME</span>/.kube/config</span><br><span class="line">sudo chown $(id -u):$(id -g) <span class="variable">$HOME</span>/.kube/config</span><br></pre></td></tr></table></figure>
+<p>Yêu cầu cài đặt một Plugin mạng trong các Plugin tại addon, ở đây đã chọn flanet, nên chạy lệnh sau để cài nó</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml</span><br></pre></td></tr></table></figure>
+<p>Gõ vài lệnh sau để kiểm tra</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Thông tin cluster</span></span><br><span class="line">kubectl cluster-info</span><br><span class="line"><span class="comment"># Các node trong cluster</span></span><br><span class="line">kubectl get nodes</span><br><span class="line"><span class="comment"># Các pod đang chạy trong tất cả các namespace</span></span><br><span class="line">kubectl get pods -A</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cau-hinh-kubectl-may-host-truy-cap-den-cac-Cluster-tu-xa"><a href="#Cau-hinh-kubectl-may-host-truy-cap-den-cac-Cluster-tu-xa" class="headerlink" title="Cấu hình kubectl máy host truy cập đến các Cluster từ xa"></a>Cấu hình kubectl máy host truy cập đến các Cluster từ xa</h3><p>Trở lại máy Host, để xem nội dung cấu hình kubectl gõ lệnh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl config view</span><br></pre></td></tr></table></figure>
+
+<p>Khi thi hành kubectl, thì nó đọc file cấu hình ở đường dẫn $HOME/.kube/config để biết các thông số để kết nối đến Cluster. ($HOME là thư mục gốc dành cho user đang chạy, để biết chính xác gõ lệnh echo $HOME) - tài khoản root thì đó là /root/.kube/config</p>
+<p>Tại máy master ở trên, có file cấu hình cho tại /root/.kube/config, ta copy file cấu hình này ra lưu thành file config-mycluster (<em>không ghi đè vào config hiện tại của máy HOST</em>)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp root@192.168.10.100:/etc/kubernetes/admin.conf ~/.kube/config-mycluster</span><br></pre></td></tr></table></figure>
+<p>Giờ bạn sẽ thực hiện kết hợp 2 file: config và config-mycluster thành 1 và lưu trở lại config.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> KUBECONFIG=~/.kube/config:~/.kube/config-mycluster</span><br><span class="line">kubectl config view --flatten &gt; ~/.kube/config_temp</span><br><span class="line">mv ~/.kube/config_temp ~/.kube/config</span><br></pre></td></tr></table></figure>
+<p>Thực hiện lệnh sau để get các contexts:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl config get-contexts</span><br></pre></td></tr></table></figure>
+<p><img src="/post-images/cre-clu-centos7/Screenshot_2.png" alt="alt"><br>Ký hiệu * là cho biết context hiện tại, nếu muốn chuyển làm việc sang context có tên kubernetes-admin@kubernetes (nối với cluster mới tạo ở trên) thì gõ lệnh</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl config use-context kubernetes-admin@kubernetes</span><br></pre></td></tr></table></figure>
+
+<h3 id="Ket-noi-Node-vao-Cluster"><a href="#Ket-noi-Node-vao-Cluster" class="headerlink" title="Kết nối Node vào Cluster"></a>Kết nối Node vào Cluster</h3><p>Hãy vào máy node master (bằng SSH ssh <a href="mailto:root@172.16.10.100">root@172.16.10.100</a>). Thực hiện lệnh sau với Cluster để lấy lệnh kết nối</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubeadm token create --<span class="built_in">print</span>-join-command</span><br></pre></td></tr></table></figure>
+<p>Sau đó vào lần lượt các máy node worker1 và worker2 (bằng SSH ssh <a href="mailto:root@172.16.10.101">root@172.16.10.101</a> và ssh <a href="mailto:root@172.16.10.102">root@172.16.10.102</a>). Copy kết quả trả về từ lệnh trước và chạy trên terminal để kết nối.\</p>
+<p>Sau đó kiểm tra các node đã được kết nối trong cluster bằng lệnh sau</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get nodes</span><br></pre></td></tr></table></figure>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="#">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>No newer post</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2020/06/26/kubernetes-overview/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>Introdu...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+
+<footer>
+  <div>
+  Copyright &copy; 2019.<a href="/">Thanh's Blogs</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button> 
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="/images/avatar.jpeg" alt="Thanh Ba Ngoc"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>Thanh Ba Ngoc</p>
+          <span class="tagline">Let's learn together!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <!-- <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-th-list fa-fw"></i>Categories</span>
+        
+    </li> -->
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-th-list fa-fw"></i>Categories</span>
+        <ul>
+          <li><a href="/kubernetes/">Kubernetes</a></li>
+        <li><a href="/ubuntu/">Ubuntu</a></li>
+        </ul>
+    </li>
+    
+    <li><a href="/about/"><i class="fa fa-user fa-fw"></i>About</a></li>
+    
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/local.search.js"></script>
+
+</body>
+</html>

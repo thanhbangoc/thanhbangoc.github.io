@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="theme-color" content=#58b77a>
+  <title>Introduction to Kubernetes - Vietnamese | Thanh&#39;s Blogs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="Thanh Ba Ngoc">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <script id="hexo-configurations">
+  var CONFIG = {
+    root: '/',
+    theme: 'lx',
+    version: '0.3.9',
+    localsearch:{
+      "enable": true,
+      "trigger": "auto",
+      "top_n_per_article": 1,
+      "unescape": false,
+      "preload": false
+      },
+    path: 'search.xml'
+  };
+</script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/css/main.min.css">
+  <style type="text/css">
+    pre,
+    code {
+      font-family: 'Fira Code', monospace;
+    }
+    html {
+      font-family: sans-serif;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1, h2, h3, h4, h5, figure {
+      font-family: sans-serif;
+    }
+    .menu-container{
+      font-family: sans-serif;
+    }
+  </style>
+
+  <script src="//cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.jside.menu.js"></script>
+	<script>
+	$(document).ready(function(){
+	$(".menu-container").jSideMenu({
+	    jSidePosition: "position-right",
+	    jSideSticky: true,
+	    jSideSkin: "greenish",
+	     });
+	}); 
+	</script>
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/font-awesome@4/css/font-awesome.min.css">
+<meta name="generator" content="Hexo 4.2.1"></head>
+<body>
+<div class="single">
+<a href="javascript:;" class="popup-trigger"><i class="menu-item-icon fa fa-search fa-fw"></i></a>
+<div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="Search..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+<div id="page">
+<div id="lx-aside" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/post_cover.jpeg)" data-stellar-background-ratio="0.5">
+  <div class="overlay">
+  <div class="page-title">
+    <div class="avatar"><a href="/"><img src="/images/avatar.jpeg"></a></div>
+    <span>2020-06-26</span>
+    <h2>Introduction to Kubernetes - Vietnamese</h2>
+    
+    <div class="social-links">
+    <a href="https://github.com/thanhbangoc" target="_blank"><i class="fa fa-github fa-fw"></i></a>
+    <a href="mailto:thanhbangoc@gmail.com" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+    <a href="https://www.linkedin.com/in/thanhbangoc/" target="_blank"><i class="fa fa-linkedin fa-fw"></i></a>
+    <a href="https://www.facebook.com/kubo.hunter/" target="_blank"><i class="fa fa-facebook fa-fw"></i></a>
+</div></div>
+</div>
+</div>
+
+<div id="lx-main-content">
+  <div class="lx-post">
+    <div class="lx-entry padding">
+      <div>
+        <p>Welcome to <a href="https://thanhbangoc.github.io/" target="_blank" rel="noopener">Thanh’s Blogs</a>! This is my post for Introduction to Kubernetes . Check document bellow for more info. If you get any problems when using document, you can find the answer in <a href="https://www.linkedin.com/in/thanhbangoc/" target="_blank" rel="noopener">Linkedin</a> or you can ask me on <a href="mailto:thanhbangoc@gmail.com">Email</a>.</p>
+<h2 id="Tong-quan-ve-Kubernetes"><a href="#Tong-quan-ve-Kubernetes" class="headerlink" title="Tổng quan về Kubernetes"></a>Tổng quan về Kubernetes</h2><p>Kubernetes (còn gọi là k8s) là mã nguồn mở, một hệ thống để tự động triển khai hệ thống, quản lý, điều phối các ứng dụng được container hóa trên một cụm máy (1 hay nhiều) gọi là cluster. Nó thực sự là một hệ thống mạnh mẽ, được phát triển bởi Google. Với Kubernetes bạn có thể cấu hình để chạy các ứng dụng, dịch vụ sao cho phù hợp nhất khi chúng tương tác với nhau cũng như với bên ngoài. Bạn có thể điều chỉnh tăng giảm tài nguyên, bản chạy phục vụ cho dịch vụ (scale), bạn có thể cập nhật (update), thu hồi update khi có vấn đề … Kubernetes là một công cụ mạnh mẽ, mềm dẻo, dễ mở rộng khi so sánh nó với công cụ tương tự là Docker Swarm!</p>
+<h2 id="So-luoc-kien-truc-cac-thanh-phan-cua-Kubernetes"><a href="#So-luoc-kien-truc-cac-thanh-phan-cua-Kubernetes" class="headerlink" title="Sơ lược kiến trúc - các thành phần của Kubernetes"></a>Sơ lược kiến trúc - các thành phần của Kubernetes</h2><p>Hệ thống Kubernetes thật sự phức tạp, các thành phần của sẽ được tìm hiểu dần qua từng bài viết, nhưng ở đây có một sơ đồ và một vài khái quát ban đầu về kiến trúc / thành phần của nó<br><img src="/post-images/kuber-overview/Screenshot_2.png" alt="alt"></p>
+<p><strong>Master</strong> Server là máy chính của cluster, tại đây điều khiển cả cụm máy. <br><strong>etct</strong> là thành phần cơ bản cần thiết cho Kubernetes, nó lưu trữ các cấu hình chung cho cả cụm máy, etct chạy tại máy master. etct là một dự án nguồn mở nó cung cấp dịch vụ lưu dữ liệu theo cặp key/value.<br><strong>kube-apiserver</strong> chạy tại máy master, cung cấp các API Restful để các client (như kubectl) tương tác với Kubernetes.<br><strong>kube-scheduler</strong> chạy tại master, thành phần này giúp lựa chọn Node nào để chạy các ứng dụng căn cứ vào tài nguyên và các thành phần khác sao cho hệ thống ổn định.<br><strong>kube-controller</strong> chạy tại master, nó điều khiển trạng thái cluster, tương tác để thực hiện các tác vụ tạo, xóa, cập nhật … các tài nguyên.<br><strong>Kubelet</strong> dịch vụ vụ chạy trên tất cả các máy (Node), nó đảm đương giám sát chạy, dừng, duy trì các ứng dụng chạy trên node của nó.<br><strong>Kube-proxy</strong> cung cấp mạng proxy để các ứng dụng nhận được traffic từ ngoài mạng vào cluster.</p>
+<h2 id="Cac-thong-tin-tom-tat-ve-Kubernetes"><a href="#Cac-thong-tin-tom-tat-ve-Kubernetes" class="headerlink" title="Các thông tin tóm tắt về Kubernetes"></a>Các thông tin tóm tắt về Kubernetes</h2><h3 id="Can-chuan-bi-gi-khi-tim-hieu-ve-Kubernetes"><a href="#Can-chuan-bi-gi-khi-tim-hieu-ve-Kubernetes" class="headerlink" title="Cần chuẩn bị gì khi tìm hiểu về Kubernetes?"></a>Cần chuẩn bị gì khi tìm hiểu về Kubernetes?</h3><ul>
+<li>Cần vừa đọc khái niệm lý thuyết vừa thực hành.</li>
+<li>Để tìm hiểu tốt về Kubernetes thì cần tìm hiểu về hệ sinh thái container và docker ở mức cở bản (có nghĩa là cài cắm và thực hành được với docker cơ bản).</li>
+<li>Kỹ năng và kiến thức tối quan trọng khi làm việc với Kubernetes là: Linux.</li>
+<li>Kỹ năng bổ trợ khác: Network (TCP/IP), một vài kỹ năng cài đặt các ứng dụng cơ bản như web server, database.</li>
+<li>Tài liệu chuẩn của Kubernetes tất nhiên là ở trang chủ của họ <a href="https://kubernetes.io/" target="_blank" rel="noopener">https://kubernetes.io/</a>, ngoài ra github này cũng coi như là một tham khảo tốt.</li>
+</ul>
+<h3 id="Khi-nao-thi-can-dung-kubernetes"><a href="#Khi-nao-thi-can-dung-kubernetes" class="headerlink" title="Khi nào thì cần dùng kubernetes?"></a>Khi nào thì cần dùng kubernetes?</h3><ul>
+<li>Thích hợp với các ứng dụng có nhu cầu scale khi có tải lớn (khi số lượng request tăng lên thì các container được quản lý bởi K8S sẽ tự động sinh ra hoặc khi 1 trong số các container bị down thì K8S tự động biết và bổ sung để thay thế.</li>
+<li>Thích hợp với những ứng dụng có kiến trúc microservice hay cloud native app..</li>
+<li>Các doanh nghiệp lớn, có nhu cầu thực sự phải scaling hệ thống nhanh chóng, và đã sử dụng container (Docker).</li>
+<li>Các dự án cần chạy &gt;= 5 container CÙNG LOẠI cho 1 dịch vụ. (Ví dụ dùng &gt;=5 máy cùng để chạy code website XYZ). Còn nhỏ hơn thì tốt nhất không dùng - đừng mang dao mổ trâu đi giết gà.</li>
+<li>Các startup hiện đại, chịu đầu tư vào công nghệ, để nhỡ về sau có to ra, thì to rất dễ 🙄.</li>
+<li>Các sysadmin/DevOps muốn tăng lương, nhảy việc, vọc công nghệ mới.</li>
+</ul>
+<h3 id="Kubernetes-co-the-lam-nhung-gi"><a href="#Kubernetes-co-the-lam-nhung-gi" class="headerlink" title="Kubernetes có thể làm những gì?"></a>Kubernetes có thể làm những gì?</h3><p>Các container là một cách tốt để đóng gói và chạy các ứng dụng của bạn. Trong môi trường production, bạn cần quản lý các container chạy các ứng dụng và đảm bảo rằng không có khoảng thời gian downtime. Ví dụ, nếu một container bị tắt đi, một container khác cần phải khởi động lên. Điều này sẽ dễ dàng hơn nếu được xử lý bởi một hệ thống.</p>
+<p>Đó là cách Kubernetes đến với chúng ta. Kubernetes cung cấp cho bạn một framework để chạy các hệ phân tán một cách mạnh mẽ. Nó đảm nhiệm việc nhân rộng và chuyển đổi dự phòng cho ứng dụng của bạn, cung cấp các mẫu deployment và hơn thế nữa. Ví dụ, Kubernetes có thể dễ dàng quản lý một triển khai canary cho hệ thống của bạn.</p>
+<p>Kubernetes cung cấp:</p>
+<ul>
+<li><p><strong>Service discovery và cân bằng tải</strong><br>Kubernetes có thể expose một container sử dụng DNS hoặc địa chỉ IP của riêng nó. Nếu lượng traffic truy cập đến một container cao, Kubernetes có thể cân bằng tải và phân phối lưu lượng mạng (network traffic) để việc triển khai được ổn định.</p>
+</li>
+<li><p><strong>Điều phối bộ nhớ</strong><br>Kubernetes cho phép bạn tự động mount một hệ thống lưu trữ mà bạn chọn, như local storages, public cloud providers, v.v.</p>
+</li>
+<li><p><strong>Tự động rollouts và rollbacks</strong><br>Bạn có thể mô tả trạng thái mong muốn cho các container được triển khai dùng Kubernetes và nó có thể thay đổi trạng thái thực tế sang trạng thái mong muốn với tần suất được kiểm soát. Ví dụ, bạn có thể tự động hoá Kubernetes để tạo mới các container cho việc triển khai của bạn, xoá các container hiện có và áp dụng tất cả các resource của chúng vào container mới.</p>
+</li>
+<li><p><strong>Đóng gói tự động</strong><br>Bạn cung cấp cho Kubernetes một cluster gồm các node mà nó có thể sử dụng để chạy các tác vụ được đóng gói (containerized task). Bạn cho Kubernetes biết mỗi container cần bao nhiêu CPU và bộ nhớ (RAM). Kubernetes có thể điều phối các container đến các node để tận dụng tốt nhất các resource của bạn.</p>
+</li>
+<li><p><strong>Tự phục hồi</strong><br>Kubernetes khởi động lại các containers bị lỗi, thay thế các container, xoá các container không phản hồi lại cấu hình health check do người dùng xác định và không cho các client biết đến chúng cho đến khi chúng sẵn sàng hoạt động.</p>
+</li>
+<li><p><strong>Quản lý cấu hình và bảo mật</strong><br>Kubernetes cho phép bạn lưu trữ và quản lý các thông tin nhạy cảm như: password, OAuth token và SSH key. Bạn có thể triển khai và cập nhật lại secret và cấu hình ứng dụng mà không cần build lại các container image và không để lộ secret trong cấu hình stack của bạn.</p>
+</li>
+</ul>
+<h3 id="Cac-san-pham-dua-tren-Kubernetes"><a href="#Cac-san-pham-dua-tren-Kubernetes" class="headerlink" title="Các sản phẩm dựa trên Kubernetes"></a>Các sản phẩm dựa trên Kubernetes</h3><ul>
+<li><strong>RedHat Openshift 3</strong>: <a href="https://www.openshift.org/" target="_blank" rel="noopener">https://www.openshift.org/</a></li>
+<li><strong>Deis Workflow</strong> - opensource platform as a service (PaaS): <a href="https://deis.com/paas/" target="_blank" rel="noopener">https://deis.com/paas/</a></li>
+<li><strong>Rancher</strong> - container management platform: <a href="http://rancher.com/rancher/" target="_blank" rel="noopener">http://rancher.com/rancher/</a></li>
+</ul>
+<h3 id="Cac-cach-de-cai-dat-K8s"><a href="#Cac-cach-de-cai-dat-K8s" class="headerlink" title="Các cách để cài đặt K8s"></a>Các cách để cài đặt K8s</h3><ul>
+<li><a href="https://kubernetes.io/docs/getting-started-guides/minikube/" target="_blank" rel="noopener"><strong>Minikube</strong></a> để cài 1 cluster test chơi chơi trên máy của bạn</li>
+<li><a href="https://kubernetes.io/docs/getting-started-guides/kubeadm/" target="_blank" rel="noopener"><strong>Kubeadm</strong></a> đang trong giai đoạn phát triển, để cài trên hệ thống máy vật lý / máy ảo dùng Ubuntu 16.04 hay CentOS 7</li>
+<li><a href="https://github.com/kubernetes-incubator/kargo/" target="_blank" rel="noopener"><strong>Kargo</strong></a> là phần mềm dựa trên Ansible để cài trên rất nhiều nơi bao gồm cả máy vật lý/máy ảo/AWS/GCE</li>
+<li>Và rất nhiều các giải pháp khác nữa xem <a href="https://kubernetes.io/docs/getting-started-guides/" target="_blank" rel="noopener"><strong>tại đây</strong></a></li>
+</ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="lx-navigation">
+	<div class="lx-cover prev lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-l.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2020/06/26/create-cluster-centos/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Next</span>
+						<h3>Create ...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+        <div class="lx-cover next lx-cover-sm" style="background-image: url(//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/images/footer-r.jpeg)">
+		<div class="overlay"></div>
+		<a class="copy" href="/2020/06/26/in-ubun-ser-16.04/">
+			<div class="display-t">
+				<div class="display-tc">
+					<div>
+						<span>Prev</span>
+						<h3>Install...</h3>
+					</div>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+
+</div>
+
+<footer>
+  <div>
+  Copyright &copy; 2019.<a href="/">Thanh's Blogs</a><br>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme <a href="https://lx.js.org" target="_blank">Lx</a><br>
+  </div>
+</footer>
+
+</div>
+
+<button class="hamburger hamburger--arrow-r" type="button">
+    <div class="hamburger-box">
+      <div class="hamburger-inner"></div>
+    </div>
+</button> 
+<div class="menu visibility">
+  <div class="menu-head">
+    <span class="layer">
+      <div class="col">
+        <div class="row for-pic">
+          <div class="profile-pic">
+            <a href="/"><img src="/images/avatar.jpeg" alt="Thanh Ba Ngoc"/></a>
+          </div>
+        </div>
+        <div class="row for-name">
+          <p>Thanh Ba Ngoc</p>
+          <span class="tagline">Let's learn together!</span>
+        </div>
+      </div>
+    </span>
+  </div>
+  <nav class="menu-container">
+  <ul class="menu-items">
+    <li><a href="/"><i class="fa fa-home fa-fw"></i>Home</a></li>
+    <li><a href="/archives/"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+    <!-- <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-th-list fa-fw"></i>Categories</span>
+        
+    </li> -->
+    <li class="has-sub"><span class="dropdown-heading">
+      <i class="fa fa-th-list fa-fw"></i>Categories</span>
+        <ul>
+          <li><a href="/kubernetes/">Kubernetes</a></li>
+        <li><a href="/ubuntu/">Ubuntu</a></li>
+        </ul>
+    </li>
+    
+    <li><a href="/about/"><i class="fa fa-user fa-fw"></i>About</a></li>
+    
+  </ul>
+  </nav>
+</div>
+
+<div class="gototop js-top">
+  <a href="#" class="js-gotop"><i class="fa fa-arrow-up"></i></a>
+</div>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/jquery.easing.min.js"></script>
+<script>
+(function () {
+	"use strict";
+	var goToTop = function() {
+		$(".js-gotop").on("click", function(event){
+			event.preventDefault();
+			$("html, body").animate({
+				scrollTop: $("html").offset().top
+			}, 500, "easeInOutExpo");
+			return false;
+		});
+		$(window).scroll(function(){
+			var $win = $(window);
+			if ($win.scrollTop() > 200) {
+				$(".js-top").addClass("active");
+			} else {
+				$(".js-top").removeClass("active");
+			}
+		});
+	};
+	$(function(){
+		goToTop();
+	});
+}());
+</script>
+<script src="//cdn.jsdelivr.net/npm/theme-lx@0.3.9/source/js/local.search.js"></script>
+
+</body>
+</html>
